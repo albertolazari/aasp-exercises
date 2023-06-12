@@ -1,0 +1,39 @@
+$S \vdash_{E_{enc}} s$ is solved by the following tree:
+
+\begin{prooftree}
+        \AxiomC{senc($s, \langle n_A, n_B \rangle$)}
+                \AxiomC{\vdots}
+            \UnaryInfC{$n_A$}
+                    \AxiomC{senc($\mathrm{aenc}(n_B, \mathrm{pk}(sk_A)), n_A$)}
+                        \AxiomC{\vdots}
+                    \UnaryInfC{$n_A$}
+                \BinaryInfC{sdec($\mathrm{senc}(\mathrm{aenc}(n_B, \mathrm{pk}(sk_A)), n_A), n_A$)}
+                \RightLabel{$=_{E_{enc}}$}
+                \UnaryInfC{aenc($n_B, \mathrm{pk}(sk_A)$)}
+                \AxiomC{$sk_A$}
+            \BinaryInfC{adec($\mathrm{aenc}(n_B, \mathrm{pk}(sk_A)), sk_A$)}
+            \RightLabel{$=_{E_{enc}}$}
+            \UnaryInfC{$n_B$}
+        \BinaryInfC{$\langle n_A, n_B \rangle$}
+    \BinaryInfC{sdec($\mathrm{senc}(s, \langle n_A, n_B \rangle), \langle n_A, n_B \rangle$)}
+    \RightLabel{$=_{E_{enc}}$}
+    \UnaryInfC{$s$}
+\end{prooftree}
+
+\noindent
+Given $S \vdash_{E_{enc}} n_A$, which is solved by the following proof tree:
+
+\begin{prooftree}
+    \AxiomC{aenc($n_A, \mathrm{pk}(sk_B)$)} \AxiomC{$sk_B$}
+    \BinaryInfC{adec($\mathrm{aenc}(n_A, \mathrm{pk}(sk_B)), sk_B$)}
+    \RightLabel{$=_{E_{enc}}$}
+    \UnaryInfC{$n_A$}
+\end{prooftree}
+
+\noindent
+Note that the rules without a label are not the ones defined in $\mathcal{I}_{DY}$ (though they are the same). They are derived from the functions, generated from the equivalence steps. The only exception is:
+\begin{prooftree}
+    \AxiomC{$a$} \AxiomC{$b$}
+    \BinaryInfC{$\langle a, b \rangle$}
+\end{prooftree}
+but $\langle a, b \rangle$ could be defined as a 2-ary function pair($a, b$).
