@@ -56,9 +56,11 @@
 
     \begin{prooftree}
         \AxiomC{senc($s, \langle n_A, n_B \rangle$)}
-            \AxiomC{$n_A$}
+                \AxiomC{\vdots}
+            \UnaryInfC{$n_A$}
                     \AxiomC{senc($\mathrm{aenc}(n_B, \mathrm{pk}(sk_A)), n_A$)}
-                    \AxiomC{$n_A$}
+                        \AxiomC{\vdots}
+                    \UnaryInfC{$n_A$}
                     \RightLabel{sdec}
                 \BinaryInfC{aenc($n_B, \mathrm{pk}(sk_A)$)}
                 \AxiomC{$sk_A$}
