@@ -1,12 +1,10 @@
-The following code models the protocols in ProVerif:
+The following code models the protocol in ProVerif:
 
-\lstinputlisting{../protocol.pv}
+\texttt{\lstinputlisting{../protocol.pv}}
 
 \subsection{Authentication}
 Authentication is proved by the first query: the event occurs only when $B$ recieves $m$ from $A$. \\
-$B$ can be certain that $m$ comes from $A$, because it decrypts it from a message encrypted with $N_b$, that could only be decrypted by $A$, because $B$ encrypted asymmetrically with $pk_A$, thus requiring $sk_A$ to decrypt.
-
-\noindent
+$B$ can be certain that $m$ comes from $A$, because it decrypts it from a message encrypted with $N_b$, that could only be decrypted by $A$, because $B$ encrypted asymmetrically with $pk_A$, thus requiring $sk_A$ to decrypt. \\
 The event is reached beacuse ProVerif outputs the following statement:
 $$
 \texttt{Query not event(authentication(m\_2,nb\_2)) is false.}
@@ -14,9 +12,7 @@ $$
 which means that the event is reachable.
 
 \subsection{Integrity}
-Integrity is proved by the second query: the event occurs only if $A$ recieves back from $B$ the hash of $m$. $A$ checks wether the hash sent from $B$ and the real $\mathsf{h}(m)$ are the same.
-
-\noindent
+Integrity is proved by the second query: the event occurs only if $A$ recieves back from $B$ the hash of $m$. $A$ checks wether the hash sent from $B$ and the real $\mathsf{h}(m)$ are the same. \\
 The event is reached beacuse ProVerif outputs the following statement:
 $$
 \texttt{Query not event(integrity(m\_2)) is false.}
@@ -24,3 +20,8 @@ $$
 which means that the event is reachable.
 
 \subsection{Confidentiality}
+Confidentiality is proved by the last query: it checks wether an external attacker can deduce the message $m$, but since it cannot only $A$ and $B$ know the message. \\
+The last query is true because ProVerif outputs the following statement:
+$$
+\texttt{Query not attacker(m[x = v,!1 = v_1]) is true.}
+$$
