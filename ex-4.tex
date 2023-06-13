@@ -1,0 +1,14 @@
+Let $C[\underline{\quad\!}]$ be the context
+    $$
+    C[\underline{\quad\!}] =
+    \mathsf{out}(c, 0);
+    \mathsf{out}(c, 1);
+    \mathsf{in}(c, pk);
+    \mathsf{in}(c, m);
+    \mathsf{if}\ m = \mathsf{aenc}(\langle 0, 1 \rangle, pk)\ \mathsf{then}\
+    \mathsf{out}(b, 1)
+    \ \|\ \underline{\quad\!}
+    $$
+
+\noindent
+$C[B] \Downarrow b$, while $C[A]$ will never emit on channel $b \implies B \centernot\approx A \implies A \centernot\approx B$
