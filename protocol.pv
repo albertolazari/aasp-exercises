@@ -1,0 +1,80 @@
+channel c.
+
+(* A and B identities *)
+const ida : bitstring.
+const idb : bitstring.
+
+(* Symmetric encryption *)
+fun senc(bitstring, bitstring) : bitstring.
+reduc forall m : bitstring, k : bitstring;
+      sdec(senc(m, k), k) = m.
+
+(* Asymmetric encryption *)
+type skey.
+type pkey.
+
+fun pk(skey) : pkey.
+fun aenc(bitstring, pkey) : bitstring.
+reduc forall m : bitstring, k : skey;
+      adec(aenc(m, pk(k)), k) = m.
+
+(* Pair *)
+fun pair(bitstring, bitstring) : bitstring.
+reduc forall a : bitstring, b : bitstring;
+      fst(pair(a, b)) = a.
+reduc forall a : bitstring, b : bitstring;
+      snd(pair(a, b)) = b.
+
+(* Hash function *)
+fun h(bitstring) : bitstring.
+
+
+(* Events *)
+event authentication(bitstring, bitstring).
+event integrity(bitstring).
+
+
+(* Queries *)
+(* Authentication *)
+query m : bitstring, nb : bitstring;
+      event(authentication(m, nb)).
+(* Integrity *)
+query m : bitstring;
+      event(integrity(m)).
+(* Confidentiality *)
+query attacker(new m).
+
+
+(* Processes *)
+let A(sk : skey, pkb : pkey, ks : bitstring) =
+    let req = pair(aenc(ida, pkb), idb) in
+    out(c, senc(req, ks));
+    in(c, x : bitstring);
+    let nb = adec(x, sk) in
+    new m : bitstring;
+    out(c, senc(m, nb));
+    in(c, hash : bitstring);
+    if hash = h(m) then
+    event integrity(m).
+
+let S(ka : bitstring, kb : bitstring) =
+    in(c, x : bitstring);
+    let req = sdec(x, ka) in
+    if snd(req) = idb then
+    out(c, senc(fst(req), kb)).
+
+let B(sk : skey, pka : pkey, ks : bitstring) =
+    in(c, x : bitstring);
+    let enc_ida = sdec(x, ks) in
+    if adec(enc_ida, sk) = ida then
+    new nb : bitstring;
+    out(c, aenc(nb, pka));
+    in(c, y : bitstring);
+    let m = sdec(y, nb) in
+    event authentication(m, nb);
+    out(c, h(m)).
+
+process
+    new ska : skey; new skb : skey;
+    new kas : bitstring; new kbs : bitstring;
+    ( !(A(ska, pk(skb), kas)) | !(S(kas, kbs)) | !(B(skb, pk(ska), kbs)) )
