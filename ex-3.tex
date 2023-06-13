@@ -1,12 +1,12 @@
 \begin{enumerate}
-    \item Let $M = x, N = \mathrm{h}(y)$. \\
-        $(x = \mathrm{h}(\mathrm{senc}(a, k)) \neq_{E_{enc}} \mathrm{h}(y))_{\varphi_1}$
+    \item Let $M = x, N = \mathsf{h}(y)$. \\
+        $(x = \mathsf{h}(\mathsf{senc}(a, k)) \neq_{E_{enc}} \mathsf{h}(y))_{\varphi_1}$
         and
-        $(x =_{E_{enc}} \mathrm{h}(y))_{\varphi_2}
+        $(x =_{E_{enc}} \mathsf{h}(y))_{\varphi_2}
         \implies \varphi_1 \centernot\sim \varphi_2$
-    \item Let $M = x, N = \mathrm{aenc}(\langle z, c \rangle, y)$. \\
-        $(x =_{E_{enc}} \mathrm{aenc}(\langle z, c \rangle, y))_{\varphi_1}$
+    \item Let $M = x, N = \mathsf{aenc}(\langle z, c \rangle, y)$. \\
+        $(x =_{E_{enc}} \mathsf{aenc}(\langle z, c \rangle, y))_{\varphi_1}$
         and
-        $(x = \mathrm{aenc}(\langle \mathrm{senc}(b, k), c \rangle, y) \neq_{E_{enc}} \mathrm{aenc}(\langle z, c \rangle, y))\varphi_1)_{\varphi_2} \\
+        $(x = \mathsf{aenc}(\langle \mathsf{senc}(b, k), c \rangle, y) \neq_{E_{enc}} \mathsf{aenc}(\langle z, c \rangle, y))\varphi_1)_{\varphi_2} \\
         \implies \varphi_1 \centernot\sim \varphi_2$
 \end{enumerate}
