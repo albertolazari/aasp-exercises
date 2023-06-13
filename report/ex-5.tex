@@ -14,5 +14,13 @@ $$
 which means that the event is reachable.
 
 \subsection{Integrity}
+Integrity is proved by the second query: the event occurs only if $A$ recieves back from $B$ the hash of $m$. $A$ checks wether the hash sent from $B$ and the real $\mathsf{h}(m)$ are the same.
+
+\noindent
+The event is reached beacuse ProVerif outputs the following statement:
+$$
+\texttt{Query not event(integrity(m\_2)) is false.}
+$$
+which means that the event is reachable.
 
 \subsection{Confidentiality}
