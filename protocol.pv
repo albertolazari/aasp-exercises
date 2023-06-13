@@ -1,8 +1,8 @@
 channel c.
 
 (* A and B identities *)
-const ida : bitstring.
-const idb : bitstring.
+const idA : bitstring.
+const idB : bitstring.
 
 (* Symmetric encryption *)
 fun senc(bitstring, bitstring) : bitstring.
@@ -36,8 +36,8 @@ event integrity(bitstring).
 
 (* Queries *)
 (* Authentication *)
-query m : bitstring, nb : bitstring;
-      event(authentication(m, nb)).
+query m : bitstring, nB : bitstring;
+      event(authentication(m, nB)).
 (* Integrity *)
 query m : bitstring;
       event(integrity(m)).
@@ -46,35 +46,35 @@ query attacker(new m).
 
 
 (* Processes *)
-let A(sk : skey, pkb : pkey, ks : bitstring) =
-    let req = pair(aenc(ida, pkb), idb) in
-    out(c, senc(req, ks));
+let A(sk : skey, pkB : pkey, kS : bitstring) =
+    let req = pair(aenc(idA, pkB), idB) in
+    out(c, senc(req, kS));
     in(c, x : bitstring);
-    let nb = adec(x, sk) in
+    let nB = adec(x, sk) in
     new m : bitstring;
-    out(c, senc(m, nb));
+    out(c, senc(m, nB));
     in(c, hash : bitstring);
     if hash = h(m) then
     event integrity(m).
 
-let S(ka : bitstring, kb : bitstring) =
+let S(kA : bitstring, kB : bitstring) =
     in(c, x : bitstring);
-    let req = sdec(x, ka) in
-    if snd(req) = idb then
-    out(c, senc(fst(req), kb)).
+    let req = sdec(x, kA) in
+    if snd(req) = idB then
+    out(c, senc(fst(req), kB)).
 
-let B(sk : skey, pka : pkey, ks : bitstring) =
+let B(sk : skey, pkA : pkey, kS : bitstring) =
     in(c, x : bitstring);
-    let enc_ida = sdec(x, ks) in
-    if adec(enc_ida, sk) = ida then
-    new nb : bitstring;
-    out(c, aenc(nb, pka));
+    let enc_idA = sdec(x, kS) in
+    if adec(enc_idA, sk) = idA then
+    new nB : bitstring;
+    out(c, aenc(nB, pkA));
     in(c, y : bitstring);
-    let m = sdec(y, nb) in
-    event authentication(m, nb);
+    let m = sdec(y, nB) in
+    event authentication(m, nB);
     out(c, h(m)).
 
 process
-    new ska : skey; new skb : skey;
-    new kas : bitstring; new kbs : bitstring;
-    ( !(A(ska, pk(skb), kas)) | !(S(kas, kbs)) | !(B(skb, pk(ska), kbs)) )
+    new skA : skey; new skB : skey;
+    new kAS : bitstring; new kBS : bitstring;
+    ( !(A(skA, pk(skB), kAS)) | !(S(kAS, kBS)) | !(B(skB, pk(skA), kBS)) )
