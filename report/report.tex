@@ -1,12 +1,39 @@
-\documentclass{article}
+\documentclass[12pt]{article}
 
-\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage[a4paper, text={6.5in,9in}]{geometry}
 \usepackage{bussproofs}
 \usepackage{amsmath}
 \usepackage{centernot}
 \usepackage{listings}
+\usepackage{titling}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\pretitle{%
+    \begin{center}
+    \LARGE
+    \includegraphics[width=6cm]{images/unipd-logo}\\[\bigskipamount]
+}
+\posttitle{\end{center}}
+
+\title{\textbf{University of Padova \\ Automated Analysis of Security Protocols exercises report}}
+\author{Alberto Lazari - 2089120}
+\date{June 2023 - A.Y. 2022-2023}
 
 \begin{document}
+    \maketitle
+    \pagebreak
+
+    \tableofcontents
+    \pagebreak
+
     \section{Message deduction}
     \input{ex-1}
 

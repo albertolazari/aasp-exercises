@@ -77,4 +77,6 @@ let B(sk : skey, pkA : pkey, kS : bitstring) =
 process
     new skA : skey; new skB : skey;
     new kAS : bitstring; new kBS : bitstring;
-    ( !(A(skA, pk(skB), kAS)) | !(S(kAS, kBS)) | !(B(skB, pk(skA), kBS)) )
+    ( !A(skA, pk(skB), kAS)
+    | !S(kAS, kBS)
+    | !B(skB, pk(skA), kBS) )
