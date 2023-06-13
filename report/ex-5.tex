@@ -1,0 +1,18 @@
+The following code models the protocols in ProVerif:
+
+\lstinputlisting{../protocol.pv}
+
+\subsection{Authentication}
+Authentication is proved by the first query: the event occurs only when $B$ recieves $m$ from $A$. \\
+$B$ can be certain that $m$ comes from $A$, because it decrypts it from a message encrypted with $N_b$, that could only be decrypted by $A$, because $B$ encrypted asymmetrically with $pk_A$, thus requiring $sk_A$ to decrypt.
+
+\noindent
+The event is reached beacuse ProVerif outputs the following statement:
+$$
+\texttt{Query not event(authentication(m\_2,nb\_2)) is false.}
+$$
+which means that the event is reachable.
+
+\subsection{Integrity}
+
+\subsection{Confidentiality}
